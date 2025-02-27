@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=4 uid="uid://beiig78mctjq"]
+
+[ext_resource type="Material" uid="uid://v2mhbusrnbvi" path="res://Board/board.tres" id="1_j1gvf"]
+[ext_resource type="Script" path="res://tiles/tile3D.gd" id="2_uwcyp"]
+[ext_resource type="Texture2D" uid="uid://cch4clji6p7vo" path="res://tiles/Letter Decals/letter_decals_normal.bmp" id="4_2v2iu"]
+[ext_resource type="Texture2D" uid="uid://d1eygbccvgg0o" path="res://tiles/Letter Decals/A.png" id="5_ndgn3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_013yf"]
+size = Vector3(0.25, 0.1, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fetdo"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_wqgfk"]
+_surfaces = [{
+"aabb": AABB(-0.026532, -0.00832643, -0.026532, 0.0530639, 0.0166529, 0.0530639),
+"format": 34896613377,
+"index_count": 132,
+"index_data": PackedByteArray("DQADAAIADQARAAMAEwAQAA4AEwAXABAAFQAFAA8AFQAJAAUAAQAKAAgAAQAEAAoABwAWABQABwALABYAAAACAAEAAwAFAAQABgAIAAcACQALAAoADAAOAA0ADwARABAAEgAUABMAFQAXABYACAAAAAEACAAGAAAAAQADAAQAAQACAAMABAAJAAoABAAFAAkACgAHAAgACgALAAcAFAAGAAcAFAASAAYACwAVABYACwAJABUAFgATABQAFgAXABMADgASABMADgAMABIAFwAPABAAFwAVAA8AEAANAA4AEAARAA0AAgAMAA0AAgAAAAwAEQAFAAMAEQAPAAUABgAMAAAABgASAAwA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("s/X//0sKAAD//zLfSwoAALP1Mt8AAAAAs/XMIAAAAAD//8wgSwoAALP1AABLCgAAs/X//7P1AACz9TLf//8AAP//Mt+z9QAAs/UAALP1AAD//8wgs/UAALP1zCD//wAASwr//0sKAABLCjLfAAAAAAAAMt9LCgAASwoAAEsKAAAAAMwgSwoAAEsKzCAAAAAASwr//7P1AAAAADLfs/UAAEsKMt///wAASwoAALP1AABLCswg//8AAAAAzCCz9QAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_pl5f6"]
+resource_name = "board_Cube_002"
+_surfaces = [{
+"aabb": AABB(-0.026532, -0.00832643, -0.026532, 0.0530639, 0.0166529, 0.0530639),
+"attribute_data": PackedByteArray("6DVZI+g1xBaWNlkj6DWrIug1xBboNcQW6DW6Gug1uhroNboa6DWrIug1uhqWNroaljZZI+g1aBvoNVkj6DX0Mp4lxBboNcQW6DWjM00mxBaWNvQy6DX0Mk0muhqWNvQyniW6Gug1ozPoNboaTSZZI00mqyJNJsQWniXEFp4lWSPoNcQWTSZZI54luhqeJVkj6DW6Gk0muhpNJqsiTSb0Mp4l9DJNJsQWTSbEFk0mxBZNJqMzTSb0Mk0mozNNJroaniX0Mk0muhpNJroa"),
+"format": 34896613399,
+"index_count": 132,
+"index_data": PackedByteArray("HQAHAAQAHQAlAAcAKgAkACAAKgAyACQALQAOACEALQAVAA4AAQAWABMAAQAKABYAEQAvACsAEQAaAC8AAAADAAIABgANAAsADwAUABIAFQAZABcAGwAfABwAIQAmACMAJwAsACgALQAwAC4AFAAAAAIAFAAPAAAAAQAIAAoAAQAFAAgADAAVABcADAAOABUAFgAQABMAFgAYABAALAAPABIALAAnAA8AGQAtAC4AGQAVAC0ALwApACsALwAxACkAHwAnACgAHwAbACcAMAAhACMAMAAtACEAIgAdAB4AIgAlAB0AAwAbABwAAwAAABsAJgAOAAkAJgAhAA4ADwAbAAAADwAnABsA"),
+"material": SubResource("StandardMaterial3D_fetdo"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 51,
+"vertex_data": PackedByteArray("s/X//0sKNM///zLfSwr6z///Mt9LChzas/Uy3wAAOe+z9TLfAADsDrP1Mt8AABDws/XMIAAAzAyz9cwgAADsDrP1zCAAABDws/XMIAAA7A7//8wgSwouz///zCBLChYP///MIEsK4iWz9QAASwrXJ7P1AABLCpows/X//7P1t7Oz9TLf//9KlrP1Mt///7aUs/Uy3///6pj//zLfs/WPsv//Mt+z9c+/s/UAALP1R0z//8wgs/WPsv//zCCz9S9As/XMIP//Spaz9cwg//8UZ7P1zCD//7aUSwr//0sKNM9LCjLfAAA570sKMt8AAOMNAAAy30sKFg8AADLfSwoc2gAAMt9LCqgISwoAAEsKyjAAAMwgSwoWDwAAzCBLCuIlAADMIEsKqAhLCswgAADjDUsKzCAAAMUQSwr//7P1t7MAADLfs/XPvwAAMt+z9emxAAAy37P1ZAxLCjLf///ClEsKMt///+qYSwoAALP1R0xLCswg//8UZ0sKzCD//8KUAADMILP1L0AAAMwgs/XpsQAAzCCz9WQMB+H4bUqd+AtnvW1ceuDxbtjpfHw9m98KjApEnoMD2WkfdT4bgwPZacFtBx9lAyC1kiNoPd4S1LJkEHth6dc/b0vJCiycvEZHtLKGXKCmcxcor1davxDpV4tooSanJSkv9FNMSXkjtDK4OJw89+33nvHuhJ8V/F5omfzeSmzclsI+88RD9x4GkiA1mXyXQpGjOzw+c6EXFnyEHw2RP+8VqFfa1dDQnvfayPbvMNa3MbyF3ErNFSi/kEpNeKMxPCfI1lCnpfdaLuEPT8l2")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_wqgfk")
+
+[node name="Tile" type="Area3D" node_paths=PackedStringArray("decal", "col")]
+script = ExtResource("2_uwcyp")
+decal = NodePath("Decal")
+arr = [null]
+col = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 5.65455e-27, -3.25261e-19, 2.71419e-25, 1, -3.55271e-15, 3.25261e-19, 3.55271e-15, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_013yf")
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(0.131252, -1.77724e-21, 5.9686e-14, 3.91126e-26, 0.131252, 3.90824e-09, -5.9686e-14, -3.90824e-09, 0.131252, -0.00051781, 0.015429, -0.00364967)
+size = Vector3(2, 0.865906, 2)
+texture_albedo = ExtResource("5_ndgn3")
+texture_normal = ExtResource("4_2v2iu")
+modulate = Color(1, 1, 1, 0.803922)
+upper_fade = 0.0247408
+lower_fade = 0.0247408
+cull_mask = 2
+
+[node name="TileMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, -6.77047e-20, 2.27374e-12, 0, 5, 1.48884e-07, -2.27374e-12, -1.48884e-07, 5, 0, 0, 0)
+layers = 2
+material_override = ExtResource("1_j1gvf")
+mesh = SubResource("ArrayMesh_pl5f6")
+skeleton = NodePath("")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
