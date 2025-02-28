@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b2guy6w51bnbu"]
+
+[ext_resource type="Texture2D" uid="uid://dky8iq0fjarw7" path="res://Board/map.png" id="1_wbrta"]
+
+[resource]
+transparency = 4
+cull_mode = 2
+albedo_texture = ExtResource("1_wbrta")
+texture_filter = 0

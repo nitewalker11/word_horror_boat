@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 		if mouse_position.distance_to(rack_positions[i].global_position) < mouse_position.distance_to(rack_positions[nearest_rack_position].global_position):
 			nearest_rack_position = i
 	if tile_held:
-		tile_held.global_position = tile_held.global_position.lerp(mouse_position, delta * 10)
+		tile_held.global_position = tile_held.global_position.lerp(mouse_position, delta * 20)
 		if rack_hovered:
 			rearrange_rack(nearest_rack_position)
 	if Input.is_action_just_pressed("left_mouse"):
@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 		if !tile_held: return
 		if space_hovered:
 			tile_played(space_hovered, tile_held)
-		elif rack_hovered:
+		else:
 			tile_placed_on_rack(nearest_rack_position, tile_held)
 		rack_area.col.disabled = true
 		for i in rack_positions:
@@ -68,14 +68,14 @@ func holding_tile(t):
 		if i.tile == t: i.tile = null
 
 func rearrange_rack(nearest):
-	if nearest == null:
-		return
-	if rack_positions[nearest].tile == null:
-		return
-	var empty
+	if nearest == null: return
+	if rack_positions[nearest].tile == null: return
+	var empty = 10
 	for i in rack_positions.size():
 		if rack_positions[i].tile == null:
-			empty = i
+			if abs(nearest - i) < empty:
+				empty = i
+	if empty == 10: return
 	if nearest > empty:
 		for i in (nearest - empty):
 			rack_positions[empty + i].set_tile(rack_positions[empty + i + 1].tile, .1)
@@ -95,6 +95,7 @@ func tile_played(s, t):
 	t.col.disabled = false
 
 func tile_placed_on_rack(s, t):
+	rearrange_rack(s)
 	rack_positions[s].set_tile(t, .1)
 	t.col.disabled = false
 
@@ -125,11 +126,8 @@ func initialize_bag():
 		new_tile.mouse_exited.connect(on_mouse_exited_tile.bind(new_tile))
 	tiles_in_bag.shuffle()
 
-#recursive function deals tiles until there are no empty spaces left on the rack
 func deal_tiles():
-	#shuffle all existing tiles to the left
-	#check how many tiles need to be dealt
-	#
+	#TODO shuffle all existing tiles to the left, then check how many tiles need to be dealt
 	for i in rack_positions:
 		if i.tile == null:
 			i.set_tile(tiles_in_bag.pop_back(), .2)

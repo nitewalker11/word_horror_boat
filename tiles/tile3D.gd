@@ -34,11 +34,7 @@ extends Area3D
 @export var arr: Array
 @export var col: CollisionShape3D
 var player: Node
-var mouse_on: bool = false
-var selected: bool = false
-var selected_offset: Vector3 = Vector3(0,.25,0)
 var tile_reference: int
-signal tile_clicked
 
 func update_tile():
 	var tile = player.owned_tiles[tile_reference]

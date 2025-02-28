@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://gk3063c66goj"]
+[gd_scene load_steps=10 format=3 uid="uid://gk3063c66goj"]
 
 [ext_resource type="PackedScene" uid="uid://dfk1lrdgf31ni" path="res://Board/board.tscn" id="2_2aj56"]
 [ext_resource type="Script" path="res://wordlist.gd" id="4_olmda"]
@@ -14,6 +14,92 @@ background_mode = 1
 background_color = Color(0.0145223, 0.00350054, 0.0305379, 1)
 sky = SubResource("Sky_if8su")
 
+[sub_resource type="Animation" id="Animation_xf0ki"]
+resource_name = "FLICKER"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:light_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.907404, 0.537209, 0.24721, 1), Color(0.949975, 0.502627, 0.25596, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5, 1.4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:omni_range")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3.5, 3.3]
+}
+
+[sub_resource type="Animation" id="Animation_4x1gk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:light_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.907404, 0.537209, 0.24721, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:omni_range")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_prenf"]
+_data = {
+"FLICKER": SubResource("Animation_xf0ki"),
+"RESET": SubResource("Animation_4x1gk")
+}
+
 [node name="Node3D" type="Node3D"]
 
 [node name="board" parent="." instance=ExtResource("2_2aj56")]
@@ -23,17 +109,18 @@ environment = SubResource("Environment_w36qu")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.513691, 0.857975, 0, -0.857975, -0.513691, 0, 2.13442, -2.03867)
-light_energy = 2.0
+light_color = Color(0.870588, 1, 1, 1)
+light_energy = 1.5
 shadow_enabled = true
 spot_range = 30.0
 spot_attenuation = 0.0
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.823414, 0.567441, 0, -0.567441, 0.823414, 0, 0.8936, 3.03662)
+transform = Transform3D(1, 0, 0, 0, 0.47906, 0.877782, 0, -0.877782, 0.47906, 0, 1.20777, 2.71225)
 light_color = Color(0.760967, 1, 0.810997, 1)
 light_energy = 2.0
 shadow_enabled = true
-spot_range = 2.0
+spot_range = 1.5
 spot_attenuation = 0.0
 spot_angle = 60.0
 
@@ -45,5 +132,23 @@ word_list = "res://word list.txt"
 [node name="Player" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_a1vk3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.266359, -0.946742, 0.180922, 0.76236, 0.321784, 0.561482, -0.589797, -0.0116276, 0.807468, 0, 1.53632, -0.0416555)
+light_color = Color(0.811765, 1, 1, 1)
+light_energy = 0.2
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61998, 0.269251, -1.24104)
+light_color = Color(0.907404, 0.537209, 0.24721, 1)
+light_energy = 1.5
+shadow_enabled = true
+omni_range = 3.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="OmniLight3D"]
+libraries = {
+"": SubResource("AnimationLibrary_prenf")
+}
+autoplay = "FLICKER"
 
 [connection signal="ready" from="Player" to="board" method="_on_player_ready"]
