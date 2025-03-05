@@ -6,7 +6,7 @@ extends Node3D
 @export var highlight: SpotLight3D
 @export var rack_area: Area3D
 
-var space_matrix: Array = []
+var board_positions: Array = []
 var board_size: int = 9
 var tiles_in_bag: Array
 var rack_positions: Array
@@ -46,7 +46,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_released("left_mouse"):
 		if !tile_held: return
 		if space_hovered:
-			tile_played(space_hovered, tile_held)
+			tile_placed_on_board(space_hovered, tile_held)
 		else:
 			tile_placed_on_rack(nearest_rack_position, tile_held)
 		rack_area.col.disabled = true
@@ -85,13 +85,10 @@ func rearrange_rack(nearest):
 			rack_positions[empty - i].set_tile(rack_positions[empty - i - 1].tile, .1)
 		rack_positions[nearest].tile = null
 
-func tile_played(s, t):
+func tile_placed_on_board(s, t):
 	#TODO disable space that tile is played in so another tile cant be placed there
-	var tile_offset = Vector3(0,.18,0)
-	t.global_position = s.global_position + tile_offset
-	var row: int = int(s.name.left(1))
-	var column: int = int(s.name.right(1))
-	space_matrix[column-1][row-1] = t
+	s.set_tile(t, .1)
+	s.col.disabled = true
 	t.col.disabled = false
 
 func tile_placed_on_rack(s, t):
@@ -102,12 +99,16 @@ func tile_placed_on_rack(s, t):
 #creates array for tiles on board and tiles on rack, and connects space entered signals
 func initialize_spaces():
 	for i in board_size:
-		space_matrix.append([])
+		board_positions.append([])
 		for j in board_size:
-			space_matrix[i].append(null)
+			board_positions[i].append(null)
 	for i in $Rack.get_children():
 		rack_positions.append(i)
 	for c in spaces.get_children():
+		var row: int = int(c.name.left(1))
+		var column: int = int(c.name.right(1))
+		board_positions[column-1][row-1] = c
+		c.offset = Vector3(0,.18,0)
 		c.mouse_entered.connect(on_mouse_entered_space.bind(c))
 		c.mouse_exited.connect(on_mouse_exited_space.bind(c))
 
@@ -127,11 +128,21 @@ func initialize_bag():
 	tiles_in_bag.shuffle()
 
 func deal_tiles():
-	#TODO shuffle all existing tiles to the left, then check how many tiles need to be dealt
+	#calc how many tiles to deal
+	var tiles_to_deal: int = 0
 	for i in rack_positions:
-		if i.tile == null:
-			i.set_tile(tiles_in_bag.pop_back(), .2)
+		if i.tile == null: tiles_to_deal += 1
+	if tile_held: tiles_to_deal -= 1
+	#deal that many tiles
+	for i in tiles_to_deal:
+		var next_null
+		for j in rack_positions:
+			if j.tile == null:
+				next_null = j
+				break
+		next_null.set_tile(tiles_in_bag.pop_back(), .2)
 		await wait(.2)
+		
 
 func on_mouse_entered_space(space):
 	var light_height_offset: Vector3 = Vector3(0, .3, 0)
