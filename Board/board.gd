@@ -5,17 +5,22 @@ extends Node3D
 @export var bag: Node3D
 @export var highlight: SpotLight3D
 @export var rack_area: Area3D
+@export var discard_area: Area3D
 
 var board_positions: Array = []
 var board_size: int = 9
 var tiles_in_bag: Array
 var rack_positions: Array
+var discard_positions: Array
 
 var tile_held
 var tile_hovered
 
 var space_hovered
 var rack_hovered: bool
+var discard_hovered: bool
+var discard_button_hovered: bool
+var play_button_hovered: bool
 
 var mouse: Vector2
 var grab_distance: float = 2.8
@@ -43,15 +48,28 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("left_mouse"):
 		if tile_hovered:
 			holding_tile(tile_hovered)
+		if discard_button_hovered:
+			for i in discard_positions:
+				if i.tile != null: i.pickup_tile().queue_free()
+			deal_tiles()
+			pass
+		if play_button_hovered:
+			pass
 	if Input.is_action_just_released("left_mouse"):
 		if !tile_held: return
 		if space_hovered:
 			tile_placed_on_board(space_hovered, tile_held)
+		elif tile_hovered:
+			var cur_space = tile_hovered.location
+			var swapped_tile = tile_hovered.location.pickup_tile()
+			cur_space.set_tile(tile_held)
+			tile_placed_on_rack(nearest_rack_position, swapped_tile)
+		elif discard_hovered:
+			tile_place_in_discard(tile_held)
 		else:
 			tile_placed_on_rack(nearest_rack_position, tile_held)
 		rack_area.col.disabled = true
-		for i in rack_positions:
-			if i.tile != null: i.tile.col.disabled = false
+		discard_area.col.disabled = true
 		tile_held = null
 
 func _input(event: InputEvent) -> void:
@@ -59,16 +77,15 @@ func _input(event: InputEvent) -> void:
 		mouse = event.position
 
 func holding_tile(t):
-	#TODO enable space that tile was played in so another tile can be placed there
-	tile_held = t
+	tile_held = t.location.pickup_tile()
+	if tile_held.blank:
+		tile_held.update_tile()
 	rack_area.col.disabled = false
-	for i in rack_positions:
-		if i.tile != null: i.tile.col.disabled = true
-	for i in rack_positions:
-		if i.tile == t: i.tile = null
+	discard_area.col.disabled = false
 
 func rearrange_rack(nearest):
-	if nearest == null: return
+	#BUG tiles swap strangely with empty spaces, can stack on top of one another
+	#check for nearest empty tile
 	if rack_positions[nearest].tile == null: return
 	var empty = 10
 	for i in rack_positions.size():
@@ -78,31 +95,41 @@ func rearrange_rack(nearest):
 	if empty == 10: return
 	if nearest > empty:
 		for i in (nearest - empty):
-			rack_positions[empty + i].set_tile(rack_positions[empty + i + 1].tile, .1)
-		rack_positions[nearest].tile = null
+			rack_positions[empty + i].set_tile(rack_positions[empty + i + 1].pickup_tile())
 	else: 
 		for i in (empty-nearest):
-			rack_positions[empty - i].set_tile(rack_positions[empty - i - 1].tile, .1)
-		rack_positions[nearest].tile = null
+			rack_positions[empty - i].set_tile(rack_positions[empty - i - 1].pickup_tile())
 
 func tile_placed_on_board(s, t):
-	#TODO disable space that tile is played in so another tile cant be placed there
-	s.set_tile(t, .1)
-	s.col.disabled = true
-	t.col.disabled = false
+	if t.blank:
+		await blank_selection(t)
+	s.set_tile(t)
+
+func blank_selection(t):
+	t.global_position = get_viewport().get_camera_3d().project_position(get_viewport().size/2, 1)
+	t.blank_selection()
+	await wait(3)
+	
 
 func tile_placed_on_rack(s, t):
 	rearrange_rack(s)
-	rack_positions[s].set_tile(t, .1)
-	t.col.disabled = false
+	rack_positions[s].set_tile(t)
 
+func tile_place_in_discard(t):
+	for i in discard_positions:
+		if i.tile == null:
+			i.set_tile(t)
+			break
+	
 #creates array for tiles on board and tiles on rack, and connects space entered signals
 func initialize_spaces():
 	for i in board_size:
 		board_positions.append([])
 		for j in board_size:
 			board_positions[i].append(null)
-	for i in $Rack.get_children():
+	for i in discard_area.mesh.get_children():
+		discard_positions.append(i)
+	for i in rack_area.mesh.get_children():
 		rack_positions.append(i)
 	for c in spaces.get_children():
 		var row: int = int(c.name.left(1))
@@ -133,6 +160,10 @@ func deal_tiles():
 	for i in rack_positions:
 		if i.tile == null: tiles_to_deal += 1
 	if tile_held: tiles_to_deal -= 1
+	for i in board_size:
+		for j in board_size:
+			if board_positions[i][j].tile != null:
+				if board_positions[i][j].tile.locked == false: tiles_to_deal -= 1
 	#deal that many tiles
 	for i in tiles_to_deal:
 		var next_null
@@ -144,6 +175,7 @@ func deal_tiles():
 		await wait(.2)
 		
 
+#input for each individual board space
 func on_mouse_entered_space(space):
 	var light_height_offset: Vector3 = Vector3(0, .3, 0)
 	space_hovered = space
@@ -153,15 +185,35 @@ func on_mouse_exited_space(_space):
 	space_hovered = null
 	highlight.visible = false
 
+#input for each individual tile
 func on_mouse_entered_tile(t) -> void:
 	tile_hovered = t
 func on_mouse_exited_tile(_t) -> void:
 	tile_hovered = null
 
+#input for the tile rack zone
 func on_mouse_entered_rack() -> void:
 	rack_hovered = true
 func on_mouse_exited_rack() -> void:
 	rack_hovered = false
 
+#input for the tile discarding zone
+func on_mouse_entered_discard() -> void:
+	discard_hovered = true
+func on_mouse_exited_discard() -> void:
+	discard_hovered = false
+	
+	
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
+
+#input for discard button
+func discard_button_entered() -> void:
+	discard_button_hovered = true
+func discard_button_exited() -> void:
+	discard_button_hovered = false
+
+func play_button_entered() -> void:
+	play_button_hovered = true
+func play_button_exited() -> void:
+	play_button_hovered = false

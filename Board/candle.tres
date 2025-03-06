@@ -9,6 +9,7 @@ albedo_texture = ExtResource("1_djlmn")
 metallic_specular = 0.0
 roughness = 0.52
 normal_enabled = true
+normal_scale = 2.91
 normal_texture = ExtResource("2_chaj0")
 clearcoat_enabled = true
 clearcoat_roughness = 1.0

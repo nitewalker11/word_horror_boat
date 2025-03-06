@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://beiig78mctjq"]
+[gd_scene load_steps=12 format=4 uid="uid://beiig78mctjq"]
 
 [ext_resource type="Material" uid="uid://v2mhbusrnbvi" path="res://Board/board.tres" id="1_j1gvf"]
 [ext_resource type="Script" path="res://tiles/tile3D.gd" id="2_uwcyp"]
@@ -40,11 +40,48 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_wqgfk")
 
-[node name="Tile" type="Area3D" node_paths=PackedStringArray("decal", "col")]
+[sub_resource type="Animation" id="Animation_mvw8f"]
+resource_name = "RED_FLASH"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Decal:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.366667, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1.03526, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.803922), Color(1, 0, 0, 1), Color(0.992157, 0.32549, 0.317647, 0.803922), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.803922)]
+}
+
+[sub_resource type="Animation" id="Animation_alyrd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Decal:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.803922)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_amln4"]
+_data = {
+"RED_FLASH": SubResource("Animation_mvw8f"),
+"RESET": SubResource("Animation_alyrd")
+}
+
+[node name="Tile" type="Area3D" node_paths=PackedStringArray("decal", "col", "animator")]
 script = ExtResource("2_uwcyp")
 decal = NodePath("Decal")
-arr = [null]
 col = NodePath("CollisionShape3D")
+animator = NodePath("AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 5.65455e-27, -3.25261e-19, 2.71419e-25, 1, -3.55271e-15, 3.25261e-19, 3.55271e-15, 1, 0, 0, 0)
@@ -66,6 +103,11 @@ layers = 2
 material_override = ExtResource("1_j1gvf")
 mesh = SubResource("ArrayMesh_pl5f6")
 skeleton = NodePath("")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_amln4")
+}
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

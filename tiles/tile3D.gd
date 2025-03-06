@@ -31,11 +31,25 @@ extends Area3D
 }
 
 @export var decal: Decal
-@export var arr: Array
 @export var col: CollisionShape3D
+@export var animator: AnimationPlayer
+
+var locked: bool
 var player: Node
 var tile_reference: int
+var location: Node3D
+var blank: bool = false
+var blank_letter: String = "A"
+
+func red_flash():
+	animator.play("RED_FLASH")
+
+func blank_selection():
+	decal.texture_albedo = load(letter_dict[blank_letter])
 
 func update_tile():
 	var tile = player.owned_tiles[tile_reference]
 	decal.texture_albedo = load(letter_dict[tile.letter])
+	if tile.letter == " ": 
+		blank = true
+		decal.modulate = Color(1,1,1,.3)
