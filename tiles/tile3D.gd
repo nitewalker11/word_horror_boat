@@ -31,25 +31,61 @@ extends Area3D
 }
 
 @export var decal: Decal
+@export var swap_decal: Decal
 @export var col: CollisionShape3D
 @export var animator: AnimationPlayer
 
-var locked: bool
 var player: Node
 var tile_reference: int
+
+var locked: bool
 var location: Node3D
+
 var blank: bool = false
-var blank_letter: String = "A"
+var blank_display: String = "A"
 
 func red_flash():
 	animator.play("RED_FLASH")
 
-func blank_selection():
-	decal.texture_albedo = load(letter_dict[blank_letter])
 
-func update_tile():
+func update_tile(ref: int = tile_reference, p: Node = player):
+	tile_reference = ref
+	player = p
 	var tile = player.owned_tiles[tile_reference]
 	decal.texture_albedo = load(letter_dict[tile.letter])
 	if tile.letter == " ": 
 		blank = true
-		decal.modulate = Color(1,1,1,.3)
+		decal.modulate = Color(1,1,1,.25)
+		swap_decal.modulate = Color(1,1,1,.25)
+	else: swap_decal.texture_albedo = load(letter_dict[" "])
+
+func place_blank():
+	#TODO add shimmery shader effect for blank tile's letter
+	animator.play("RESET")
+	decal.texture_albedo = load(letter_dict[blank_display])
+	swap_decal.texture_albedo = load(letter_dict[" "])
+
+func init_blank():
+	decal.texture_albedo = load(letter_dict[blank_display])
+	swap_decal.texture_albedo = load(letter_dict[blank_display])
+	global_position = get_viewport().get_camera_3d().project_position(get_viewport().size/2, 1)
+
+func reset_blank():
+	decal.texture_albedo = load(letter_dict[player.owned_tiles[tile_reference].letter])
+	swap_decal.texture_albedo = load(letter_dict[player.owned_tiles[tile_reference].letter])
+	blank_display = "A"
+
+func blank_selection(next_letter: String, scroll_down: bool):
+	print(next_letter)
+	if scroll_down:
+		decal.texture_albedo = load(letter_dict[blank_display])
+		swap_decal.texture_albedo = load(letter_dict[next_letter])
+		animator.play("SWAP")
+		await animator.animation_finished
+	else:
+		decal.texture_albedo = load(letter_dict[next_letter])
+		swap_decal.texture_albedo = load(letter_dict[blank_display])
+		animator.play_backwards("SWAP")
+		await animator.animation_finished
+	blank_display = next_letter
+	decal.texture_albedo = load(letter_dict[blank_display])

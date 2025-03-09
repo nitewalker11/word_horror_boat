@@ -931,31 +931,31 @@ mesh = SubResource("ArrayMesh_bcdqf")
 skeleton = NodePath("")
 
 [node name="Marker3D" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(1, -8.78908e-08, -8.60304e-19, 8.78908e-08, 1, 1.47522e-11, -4.36282e-19, -1.47522e-11, 1, -0.152827, 0.960969, 3.7894)
+transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.153106, 0.960826, -4.34856)
 script = ExtResource("5_i6sqx")
 
 [node name="Marker3D2" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(1, -8.78908e-08, -1.21392e-18, 8.78908e-08, 1, 1.87756e-11, -4.36282e-19, -1.87756e-11, 1, -0.152828, 0.960971, 2.43308)
+transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.153012, 0.960873, -2.99224)
 script = ExtResource("5_i6sqx")
 
 [node name="Marker3D3" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(1, -8.78908e-08, -1.21392e-18, 8.78908e-08, 1, 1.87756e-11, -4.36282e-19, -1.87756e-11, 1, -0.152828, 0.960971, 1.07675)
+transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.15292, 0.960922, -1.63591)
 script = ExtResource("5_i6sqx")
 
 [node name="Marker3D4" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(1, -8.78908e-08, -1.21392e-18, 8.78908e-08, 1, 1.87756e-11, -4.36282e-19, -1.87756e-11, 1, -0.152828, 0.96097, -0.27958)
+transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.152828, 0.96097, -0.279583)
 script = ExtResource("5_i6sqx")
 
 [node name="Marker3D5" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(1, -8.78908e-08, -1.21392e-18, 8.78908e-08, 1, 1.87756e-11, -4.36282e-19, -1.87756e-11, 1, -0.152827, 0.960971, -1.63591)
+transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.152734, 0.961019, 1.07675)
 script = ExtResource("5_i6sqx")
 
 [node name="Marker3D6" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(1, -8.78908e-08, -1.21392e-18, 8.78908e-08, 1, 1.87756e-11, -4.36282e-19, -1.87756e-11, 1, -0.152827, 0.960972, -2.99224)
+transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.15264, 0.961066, 2.43308)
 script = ExtResource("5_i6sqx")
 
 [node name="Marker3D7" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(1, -8.78908e-08, -1.21392e-18, 8.78908e-08, 1, 1.87756e-11, -4.36282e-19, -1.87756e-11, 1, -0.152827, 0.96097, -4.34857)
+transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.152549, 0.961116, 3.78941)
 script = ExtResource("5_i6sqx")
 
 [node name="Discard Area" type="Area3D" parent="." node_paths=PackedStringArray("mesh")]

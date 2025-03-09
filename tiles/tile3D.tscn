@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://beiig78mctjq"]
+[gd_scene load_steps=13 format=4 uid="uid://beiig78mctjq"]
 
 [ext_resource type="Material" uid="uid://v2mhbusrnbvi" path="res://Board/board.tres" id="1_j1gvf"]
 [ext_resource type="Script" path="res://tiles/tile3D.gd" id="2_uwcyp"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d1eygbccvgg0o" path="res://tiles/Letter Decals/A.png" id="5_ndgn3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_013yf"]
-size = Vector3(0.25, 0.1, 0.25)
+size = Vector3(0.291016, 0.1, 0.289185)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fetdo"]
 
@@ -61,34 +61,87 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Decal:modulate")
+tracks/0/path = NodePath("Decal:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0.803922)]
+"values": [Vector3(-0.00051781, 0.015429, -0.00364967)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Swap Decal:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.00051781, 0.015429, -0.28018)]
+}
+
+[sub_resource type="Animation" id="Animation_046qk"]
+resource_name = "SWAP"
+length = 0.1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Decal:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.08, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.00051781, 0.015429, -0.00364967), Vector3(-0.001, 0.015, -0.01), Vector3(-0.001, 0.015, 0.29), Vector3(-0.001, 0.015, 0.28)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Swap Decal:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.08, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.00051781, 0.015429, -0.28018), Vector3(-0.001, 0.015, -0.29), Vector3(-0.001, 0.015, 0.01), Vector3(-0.001, 0.015, -0.004)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_amln4"]
 _data = {
 "RED_FLASH": SubResource("Animation_mvw8f"),
-"RESET": SubResource("Animation_alyrd")
+"RESET": SubResource("Animation_alyrd"),
+"SWAP": SubResource("Animation_046qk")
 }
 
-[node name="Tile" type="Area3D" node_paths=PackedStringArray("decal", "col", "animator")]
+[node name="Tile" type="Area3D" node_paths=PackedStringArray("decal", "swap_decal", "col", "animator")]
 script = ExtResource("2_uwcyp")
 decal = NodePath("Decal")
+swap_decal = NodePath("Swap Decal")
 col = NodePath("CollisionShape3D")
 animator = NodePath("AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 5.65455e-27, -3.25261e-19, 2.71419e-25, 1, -3.55271e-15, 3.25261e-19, 3.55271e-15, 1, 0, 0, 0)
+transform = Transform3D(1, 5.65455e-27, -3.25261e-19, 2.71419e-25, 1, -3.55271e-15, 3.25261e-19, 3.55271e-15, 1, 0.00195313, 1.0842e-18, -0.000305176)
 shape = SubResource("BoxShape3D_013yf")
 
 [node name="Decal" type="Decal" parent="."]
 transform = Transform3D(0.131252, -1.77724e-21, 5.9686e-14, 3.91126e-26, 0.131252, 3.90824e-09, -5.9686e-14, -3.90824e-09, 0.131252, -0.00051781, 0.015429, -0.00364967)
+size = Vector3(2, 0.865906, 2)
+texture_albedo = ExtResource("5_ndgn3")
+texture_normal = ExtResource("4_2v2iu")
+modulate = Color(1, 1, 1, 0.803922)
+upper_fade = 0.0247408
+lower_fade = 0.0247408
+cull_mask = 2
+
+[node name="Swap Decal" type="Decal" parent="."]
+transform = Transform3D(0.131252, -1.77724e-21, 5.9686e-14, 3.91126e-26, 0.131252, 3.90824e-09, -5.9686e-14, -3.90824e-09, 0.131252, -0.00051781, 0.015429, -0.28018)
 size = Vector3(2, 0.865906, 2)
 texture_albedo = ExtResource("5_ndgn3")
 texture_normal = ExtResource("4_2v2iu")

@@ -25,6 +25,11 @@ var play_button_hovered: bool
 var mouse: Vector2
 var grab_distance: float = 2.8
 
+var selected_blank: Node3D
+var space_for_blank: Node3D
+var alphabet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+var typed_letter: String = ""
+
 func _ready() -> void:
 	rack_area.col.disabled = true
 
@@ -35,6 +40,15 @@ func _on_player_ready() -> void:
 	deal_tiles()
 
 func _process(delta: float) -> void:
+	#dont run other game controls until blank has been selected
+	if selected_blank:
+		if Input.is_action_just_pressed("left_mouse") or Input.is_action_just_pressed("confirm"):
+			space_for_blank.set_tile(selected_blank)
+			selected_blank.place_blank()
+			selected_blank = null
+			return
+		blank_selection()
+		return
 #find the nearest rack position to the mouse
 	var mouse_position: Vector3 = get_viewport().get_camera_3d().project_position(mouse,grab_distance)
 	var nearest_rack_position: int = 0
@@ -62,6 +76,8 @@ func _process(delta: float) -> void:
 		elif tile_hovered:
 			var cur_space = tile_hovered.location
 			var swapped_tile = tile_hovered.location.pickup_tile()
+			if swapped_tile.blank:
+				swapped_tile.reset_blank()
 			cur_space.set_tile(tile_held)
 			tile_placed_on_rack(nearest_rack_position, swapped_tile)
 		elif discard_hovered:
@@ -75,11 +91,14 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouse = event.position
+	if event is InputEventKey && event.pressed:
+		if alphabet.find(event.as_text_key_label()) != -1:
+			typed_letter = event.as_text_key_label()
 
 func holding_tile(t):
 	tile_held = t.location.pickup_tile()
 	if tile_held.blank:
-		tile_held.update_tile()
+		tile_held.reset_blank()
 	rack_area.col.disabled = false
 	discard_area.col.disabled = false
 
@@ -102,13 +121,27 @@ func rearrange_rack(nearest):
 
 func tile_placed_on_board(s, t):
 	if t.blank:
-		await blank_selection(t)
+		space_for_blank = s
+		selected_blank = t
+		selected_blank.init_blank()
+		return
 	s.set_tile(t)
-
-func blank_selection(t):
-	t.global_position = get_viewport().get_camera_3d().project_position(get_viewport().size/2, 1)
-	t.blank_selection()
-	await wait(3)
+	
+func blank_selection():
+	var current_letter: String = selected_blank.blank_display
+	var next_letter: String = current_letter
+	var scroll_down: bool = true
+	if Input.is_action_just_pressed("scroll_down"):
+		next_letter = alphabet[wrapi(alphabet.find(current_letter) + 1, 0, 26)]
+		scroll_down = false
+	elif Input.is_action_just_pressed("scroll_up"):
+		next_letter = alphabet[wrapi(alphabet.find(current_letter) - 1, 0, 26)]
+	if typed_letter != "":
+		next_letter = typed_letter
+		typed_letter = ""
+	if next_letter == current_letter: return
+	await selected_blank.blank_selection(next_letter, scroll_down)
+	
 	
 
 func tile_placed_on_rack(s, t):
@@ -147,9 +180,7 @@ func initialize_bag():
 		tiles_in_bag.append(new_tile)
 		add_child(new_tile)
 		new_tile.global_position = bag.global_position
-		new_tile.tile_reference = i
-		new_tile.player = %Player
-		new_tile.update_tile()
+		new_tile.update_tile(i, %Player)
 		new_tile.mouse_entered.connect(on_mouse_entered_tile.bind(new_tile))
 		new_tile.mouse_exited.connect(on_mouse_exited_tile.bind(new_tile))
 	tiles_in_bag.shuffle()
