@@ -4,6 +4,8 @@ var tile: Area3D
 var offset: Vector3 = Vector3.ZERO
 var col: CollisionShape3D
 var tween
+var row
+var column
 
 func _ready() -> void:
 	if get_child_count() > 0:

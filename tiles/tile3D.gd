@@ -44,9 +44,11 @@ var location: Node3D
 var blank: bool = false
 var blank_display: String = "A"
 
-func red_flash():
+func flash_red():
 	animator.play("RED_FLASH")
 
+func get_letter():
+	return player.owned_tiles[tile_reference].letter
 
 func update_tile(ref: int = tile_reference, p: Node = player):
 	tile_reference = ref

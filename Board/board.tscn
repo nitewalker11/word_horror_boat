@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://dfk1lrdgf31ni"]
+[gd_scene load_steps=36 format=4 uid="uid://dfk1lrdgf31ni"]
 
 [ext_resource type="Material" uid="uid://v2mhbusrnbvi" path="res://Board/board.tres" id="1_cjxtl"]
 [ext_resource type="Script" path="res://Board/board.gd" id="1_yuwcg"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b8bpq7a488o6p" path="res://Board/star.png" id="2_r7bvs"]
 [ext_resource type="Script" path="res://Board/interactable_area.gd" id="5_eakkk"]
 [ext_resource type="Script" path="res://Board/tile_placer.gd" id="5_i6sqx"]
+[ext_resource type="PackedScene" uid="uid://brd4ible4i50s" path="res://marker_3d.tscn" id="7_w6f88"]
 [ext_resource type="Material" uid="uid://b2guy6w51bnbu" path="res://Board/map.tres" id="8_4cukn"]
 [ext_resource type="Material" uid="uid://b65ku0vcaooug" path="res://Board/wood_2.tres" id="8_cn0gb"]
 [ext_resource type="Texture2D" uid="uid://bef4xmwhblycr" path="res://tiles/Letter Decals/X.png" id="8_iu45t"]
@@ -930,9 +931,7 @@ material_override = ExtResource("1_cjxtl")
 mesh = SubResource("ArrayMesh_bcdqf")
 skeleton = NodePath("")
 
-[node name="Marker3D" type="Marker3D" parent="Rack Area/Rack"]
-transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.153106, 0.960826, -4.34856)
-script = ExtResource("5_i6sqx")
+[node name="Marker3D" parent="Rack Area/Rack" instance=ExtResource("7_w6f88")]
 
 [node name="Marker3D2" type="Marker3D" parent="Rack Area/Rack"]
 transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.153012, 0.960873, -2.99224)

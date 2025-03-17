@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://gk3063c66goj"]
+[gd_scene load_steps=11 format=3 uid="uid://gk3063c66goj"]
 
 [ext_resource type="PackedScene" uid="uid://dfk1lrdgf31ni" path="res://Board/board.tscn" id="2_2aj56"]
 [ext_resource type="Script" path="res://wordlist.gd" id="4_olmda"]
+[ext_resource type="Script" path="res://scorekeeper.gd" id="4_rbx21"]
 [ext_resource type="Script" path="res://Player/player.gd" id="5_a1vk3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ke24"]
@@ -183,5 +184,9 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Scorekeeper" type="Node" parent="." node_paths=PackedStringArray("board")]
+script = ExtResource("4_rbx21")
+board = NodePath("../board")
 
 [connection signal="ready" from="Player" to="board" method="_on_player_ready"]

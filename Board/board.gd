@@ -30,6 +30,8 @@ var space_for_blank: Node3D
 var alphabet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 var typed_letter: String = ""
 
+signal played_word(word)
+
 func _ready() -> void:
 	rack_area.col.disabled = true
 
@@ -68,7 +70,7 @@ func _process(delta: float) -> void:
 			deal_tiles()
 			pass
 		if play_button_hovered:
-			pass
+			verify_play()
 	if Input.is_action_just_released("left_mouse"):
 		if !tile_held: return
 		if space_hovered:
@@ -95,6 +97,65 @@ func _input(event: InputEvent) -> void:
 		if alphabet.find(event.as_text_key_label()) != -1:
 			typed_letter = event.as_text_key_label()
 
+func verify_play():
+	#get all tiles played
+	var played_tiles_array: Array
+	for i in board_size:
+		for j in board_size:
+			if board_positions[i][j].tile != null:
+				if !board_positions[i][j].tile.locked:
+					played_tiles_array.append(board_positions[i][j].tile)
+	#check if all newly played letters are in one row or column
+	var horizontal_word: bool = true
+	var vertical_word: bool = true
+	var first_letter_in_word = played_tiles_array[0]
+	for i in played_tiles_array:
+		if first_letter_in_word.location.row != i.location.row:
+			horizontal_word = false
+		if first_letter_in_word.location.column != i.location.column:
+			vertical_word = false
+	if !horizontal_word && !vertical_word:
+		flash(played_tiles_array) 
+		return
+	#get full word based on first and last letter
+	var final_word_array: Array
+	var played_word: String
+	var current_line: int
+	var first_pos: int
+	var last_pos: int
+	if horizontal_word:
+		current_line = first_letter_in_word.location.row
+		first_pos = first_letter_in_word.location.column
+		last_pos = played_tiles_array.back().location.column
+	elif vertical_word:
+		current_line = first_letter_in_word.location.column
+		first_pos = first_letter_in_word.location.row
+		last_pos = played_tiles_array.back().location.row
+	for i in last_pos - first_pos + 1:
+		if horizontal_word:
+			var check_pos = board_positions[i+first_pos-1][current_line-1]
+			if check_pos.tile == null:
+				flash(played_tiles_array) 
+				return
+			final_word_array.append(check_pos.tile)
+			played_word += check_pos.tile.get_letter()
+		if vertical_word:
+			var check_pos = board_positions[current_line-1][i+first_pos-1]
+			if check_pos.tile == null: 
+				flash(played_tiles_array) 
+				return
+			final_word_array.append(check_pos.tile)
+			played_word += check_pos.tile.get_letter()
+	#check dictionary for matching string
+	if %Wordlist != null:
+		if !%Wordlist.check_dictionary(played_word): 
+			flash(played_tiles_array) 
+			return
+
+func flash(played_tiles_array: Array):
+	for i in played_tiles_array:
+		i.flash_red()
+
 func holding_tile(t):
 	tile_held = t.location.pickup_tile()
 	if tile_held.blank:
@@ -103,7 +164,6 @@ func holding_tile(t):
 	discard_area.col.disabled = false
 
 func rearrange_rack(nearest):
-	#BUG tiles swap strangely with empty spaces, can stack on top of one another
 	#check for nearest empty tile
 	if rack_positions[nearest].tile == null: return
 	var empty = 10
@@ -168,6 +228,8 @@ func initialize_spaces():
 		var row: int = int(c.name.left(1))
 		var column: int = int(c.name.right(1))
 		board_positions[column-1][row-1] = c
+		c.row = row
+		c.column = column
 		c.offset = Vector3(0,.18,0)
 		c.mouse_entered.connect(on_mouse_entered_space.bind(c))
 		c.mouse_exited.connect(on_mouse_exited_space.bind(c))
