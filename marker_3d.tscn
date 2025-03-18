@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://brd4ible4i50s"]
 
-[ext_resource type="Script" path="res://Board/tile_placer.gd" id="1_hs613"]
+[ext_resource type="Script" path="res://Board/location.gd" id="1_hs613"]
 
 [node name="Marker3D" type="Marker3D"]
 transform = Transform3D(0.573941, 0.818897, -6.83587e-05, 0.818897, -0.573941, -3.56645e-05, -6.84394e-05, -3.55094e-05, -1, -0.153106, 0.960826, -4.34856)

@@ -4,8 +4,10 @@ extends Node3D
 @export var spaces: Node3D
 @export var bag: Node3D
 @export var highlight: SpotLight3D
+@export var blanklight: SpotLight3D
 @export var rack_area: Area3D
 @export var discard_area: Area3D
+@export var cam: Camera3D
 
 var board_positions: Array = []
 var board_size: int = 9
@@ -17,29 +19,32 @@ var tile_held
 var tile_hovered
 
 var space_hovered
+var space_highlight_height: Vector3 = Vector3(0, .3, 0) 
 var rack_hovered: bool
 var discard_hovered: bool
 var discard_button_hovered: bool
 var play_button_hovered: bool
 
 var mouse: Vector2
-var grab_distance: float = 2.8
 
 var selected_blank: Node3D
 var space_for_blank: Node3D
 var alphabet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 var typed_letter: String = ""
 
-signal played_word(word)
+var blank_selection_pos
+var tile_hover_distance
 
 func _ready() -> void:
 	rack_area.col.disabled = true
+	
 
 # runs when player class is init
 func _on_player_ready() -> void:
 	initialize_spaces()
 	initialize_bag()
 	deal_tiles()
+	tile_hover_distance = cam.global_position.y - .27
 
 func _process(delta: float) -> void:
 	#dont run other game controls until blank has been selected
@@ -48,19 +53,22 @@ func _process(delta: float) -> void:
 			space_for_blank.set_tile(selected_blank)
 			selected_blank.place_blank()
 			selected_blank = null
+			blanklight.visible = false
 			return
 		blank_selection()
 		return
-#find the nearest rack position to the mouse
-	var mouse_position: Vector3 = get_viewport().get_camera_3d().project_position(mouse,grab_distance)
+	#find the nearest rack position to the mouse
+	var mouse_position: Vector3 = get_viewport().get_camera_3d().project_position(mouse,tile_hover_distance)
 	var nearest_rack_position: int = 0
 	for i in rack_positions.size():
 		if mouse_position.distance_to(rack_positions[i].global_position) < mouse_position.distance_to(rack_positions[nearest_rack_position].global_position):
 			nearest_rack_position = i
+	#what to do with a tile that you are holding left click on
 	if tile_held:
 		tile_held.global_position = tile_held.global_position.lerp(mouse_position, delta * 20)
 		if rack_hovered:
 			rearrange_rack(nearest_rack_position)
+	#input read for clicking on the various tiles and input zones on the board
 	if Input.is_action_just_pressed("left_mouse"):
 		if tile_hovered:
 			holding_tile(tile_hovered)
@@ -70,7 +78,10 @@ func _process(delta: float) -> void:
 			deal_tiles()
 			pass
 		if play_button_hovered:
-			verify_play()
+			var array_to_score = verify_play()
+			if array_to_score != null:
+				%Scorekeeper.score_word(array_to_score)
+	#input read for dropping a held tile
 	if Input.is_action_just_released("left_mouse"):
 		if !tile_held: return
 		if space_hovered:
@@ -105,6 +116,7 @@ func verify_play():
 			if board_positions[i][j].tile != null:
 				if !board_positions[i][j].tile.locked:
 					played_tiles_array.append(board_positions[i][j].tile)
+	if played_tiles_array == null: return
 	#check if all newly played letters are in one row or column
 	var horizontal_word: bool = true
 	var vertical_word: bool = true
@@ -151,6 +163,7 @@ func verify_play():
 		if !%Wordlist.check_dictionary(played_word): 
 			flash(played_tiles_array) 
 			return
+	return final_word_array
 
 func flash(played_tiles_array: Array):
 	for i in played_tiles_array:
@@ -184,6 +197,10 @@ func tile_placed_on_board(s, t):
 		space_for_blank = s
 		selected_blank = t
 		selected_blank.init_blank()
+		#set lights for 
+		blanklight.global_position = s.global_position + space_highlight_height
+		blanklight.visible = true
+		highlight.visible = false
 		return
 	s.set_tile(t)
 	
@@ -270,10 +287,10 @@ func deal_tiles():
 
 #input for each individual board space
 func on_mouse_entered_space(space):
-	var light_height_offset: Vector3 = Vector3(0, .3, 0)
+	if selected_blank: return
 	space_hovered = space
 	highlight.visible = true
-	highlight.global_position = space.global_position + light_height_offset
+	highlight.global_position = space.global_position + space_highlight_height
 func on_mouse_exited_space(_space):
 	space_hovered = null
 	highlight.visible = false

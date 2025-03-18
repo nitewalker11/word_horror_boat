@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://beiig78mctjq" path="res://tiles/tile3D.tscn" id="2_lxykt"]
 [ext_resource type="Texture2D" uid="uid://b8bpq7a488o6p" path="res://Board/star.png" id="2_r7bvs"]
 [ext_resource type="Script" path="res://Board/interactable_area.gd" id="5_eakkk"]
-[ext_resource type="Script" path="res://Board/tile_placer.gd" id="5_i6sqx"]
+[ext_resource type="Script" path="res://Board/location.gd" id="5_i6sqx"]
 [ext_resource type="PackedScene" uid="uid://brd4ible4i50s" path="res://marker_3d.tscn" id="7_w6f88"]
 [ext_resource type="Material" uid="uid://b2guy6w51bnbu" path="res://Board/map.tres" id="8_4cukn"]
 [ext_resource type="Material" uid="uid://b65ku0vcaooug" path="res://Board/wood_2.tres" id="8_cn0gb"]
@@ -226,17 +226,19 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_vojwr")
 
-[node name="board" type="Node3D" node_paths=PackedStringArray("spaces", "bag", "highlight", "rack_area", "discard_area")]
+[node name="board" type="Node3D" node_paths=PackedStringArray("spaces", "bag", "highlight", "blanklight", "rack_area", "discard_area", "cam")]
 script = ExtResource("1_yuwcg")
 tile3D_scene = ExtResource("2_lxykt")
 spaces = NodePath("Spaces")
 bag = NodePath("Bag")
 highlight = NodePath("Highlight")
+blanklight = NodePath("Blanklight")
 rack_area = NodePath("Rack Area")
 discard_area = NodePath("Discard Area")
+cam = NodePath("Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.328621, 3.14319, 0.157024)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.328621, 3.39026, 0.157024)
 
 [node name="Board" type="MeshInstance3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
@@ -254,11 +256,22 @@ lower_fade = 0.0163228
 
 [node name="Highlight" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.313589, 0)
+visible = false
 light_color = Color(0, 0.868434, 0.533053, 1)
 light_energy = 2.0
 light_specular = 1.0
 spot_range = 1.0
 spot_angle = 50.0
+spot_angle_attenuation = 1.51572
+
+[node name="Blanklight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.313589, 0)
+visible = false
+light_color = Color(0.649048, 0.445096, 0.8277, 1)
+light_energy = 2.0
+light_specular = 1.0
+spot_range = 1.0
+spot_angle = 71.25
 spot_angle_attenuation = 1.51572
 
 [node name="Spaces" type="Node3D" parent="."]

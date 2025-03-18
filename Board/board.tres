@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://britj03v878md" path="res://Board/board_normal.bmp" id="2_j02bj"]
 
 [resource]
+disable_ambient_light = true
 albedo_texture = ExtResource("1_ktpmw")
 metallic = 0.39
 metallic_specular = 0.19

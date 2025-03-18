@@ -149,15 +149,6 @@ spot_range = 1.5
 spot_attenuation = 0.0
 spot_angle = 60.0
 
-[node name="Wordlist" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("4_olmda")
-word_list = "res://word list.txt"
-
-[node name="Player" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("5_a1vk3")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.266359, -0.946742, 0.180922, 0.76236, 0.321784, 0.561482, -0.589797, -0.0116276, 0.807468, 0, 1.53632, -0.0416555)
 light_color = Color(0.811765, 1, 1, 1)
@@ -185,7 +176,17 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Wordlist" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_olmda")
+word_list = "res://word list.txt"
+
+[node name="Player" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_a1vk3")
+
 [node name="Scorekeeper" type="Node" parent="." node_paths=PackedStringArray("board")]
+unique_name_in_owner = true
 script = ExtResource("4_rbx21")
 board = NodePath("../board")
 

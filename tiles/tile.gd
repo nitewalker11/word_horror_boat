@@ -27,16 +27,14 @@ func when_played():
 		point_value += 2
 	if brand == "plusfive":
 		point_value += 5
-	score(point_value)
 	if brand == "sticky":
 		#tile is not added back to bag
 		#next board starts with tile in same position
 		pass
 
-func score(p):
+func score():
 	#send points to board to calculate word score
-	print(p)
-	pass
+	return point_value
 
 func end_of_round():
 	if material == "gold":
