@@ -77,10 +77,22 @@ func _process(delta: float) -> void:
 				if i.tile != null: i.pickup_tile().queue_free()
 			deal_tiles()
 			pass
+
+		#when you hit play, check whether the word is valid, and 
 		if play_button_hovered:
-			var array_to_score = verify_play()
-			if array_to_score != null:
+			#verify play returns 2 values, bool that shows whether word is valid and array of tiles to manipulate
+			var verification_array = verify_play()
+			var valid_word = verification_array[0]
+			var array_to_score = verification_array[1]
+			if valid_word:
 				%Scorekeeper.score_word(array_to_score)
+				for i in array_to_score:
+					i.lock()
+				deal_tiles()
+			else:
+				for i in array_to_score:
+					i.flash_red()
+
 	#input read for dropping a held tile
 	if Input.is_action_just_released("left_mouse"):
 		if !tile_held: return
@@ -116,7 +128,7 @@ func verify_play():
 			if board_positions[i][j].tile != null:
 				if !board_positions[i][j].tile.locked:
 					played_tiles_array.append(board_positions[i][j].tile)
-	if played_tiles_array == null: return
+	if played_tiles_array == null: return [false, played_tiles_array]
 	#check if all newly played letters are in one row or column
 	var horizontal_word: bool = true
 	var vertical_word: bool = true
@@ -127,9 +139,9 @@ func verify_play():
 		if first_letter_in_word.location.column != i.location.column:
 			vertical_word = false
 	if !horizontal_word && !vertical_word:
-		flash(played_tiles_array) 
-		return
+		return [false, played_tiles_array]
 	#get full word based on first and last letter
+	
 	var final_word_array: Array
 	var played_word: String
 	var current_line: int
@@ -147,27 +159,20 @@ func verify_play():
 		if horizontal_word:
 			var check_pos = board_positions[i+first_pos-1][current_line-1]
 			if check_pos.tile == null:
-				flash(played_tiles_array) 
-				return
+				return [false, played_tiles_array]
 			final_word_array.append(check_pos.tile)
 			played_word += check_pos.tile.get_letter()
 		if vertical_word:
 			var check_pos = board_positions[current_line-1][i+first_pos-1]
 			if check_pos.tile == null: 
-				flash(played_tiles_array) 
-				return
+				return [false, played_tiles_array]
 			final_word_array.append(check_pos.tile)
 			played_word += check_pos.tile.get_letter()
 	#check dictionary for matching string
 	if %Wordlist != null:
 		if !%Wordlist.check_dictionary(played_word): 
-			flash(played_tiles_array) 
-			return
-	return final_word_array
-
-func flash(played_tiles_array: Array):
-	for i in played_tiles_array:
-		i.flash_red()
+			return [false, played_tiles_array]
+	return [true, final_word_array]
 
 func holding_tile(t):
 	tile_held = t.location.pickup_tile()
@@ -297,6 +302,7 @@ func on_mouse_exited_space(_space):
 
 #input for each individual tile
 func on_mouse_entered_tile(t) -> void:
+	if t.locked: return
 	tile_hovered = t
 func on_mouse_exited_tile(_t) -> void:
 	tile_hovered = null

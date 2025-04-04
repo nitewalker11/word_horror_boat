@@ -1,10 +1,29 @@
 extends Node
 
 var owned_tiles: Array
+var stamps: Array
 
 func _ready():
 	#initialize the set of tiles the player has access to
 	owned_tiles = new_owned_tiles()
+	stamps = initialize_stamps()
+	
+
+func initialize_stamps():
+	var board_size: int = 9
+	var default_stamps_array: Array
+	for i in board_size:
+		default_stamps_array.append([])
+		for j in board_size:
+			var new_stamp = Stamp.new()
+			if (i == 0 and (j == 0 or j == 8)) or (i == 8 and j == 8):
+				new_stamp.set_stamp_type("TW")
+			if ((i == 1 or i == 7) and j == 4) or (i == 4 and (j == 1 or j == 7)):
+				new_stamp.set_stamp_type("DL")
+			if (i == 2 and (j == 2 or j == 6)) or (i == 6 and j == 6):
+				new_stamp.set_stamp_type("DW")
+			default_stamps_array[i].append(new_stamp)
+	return default_stamps_array
 	
 
 func new_owned_tiles():

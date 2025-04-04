@@ -46,7 +46,13 @@ var blank_display: String = "A"
 
 func flash_red():
 	animator.play("RED_FLASH")
+	if blank: decal.modulate = Color(1,1,1,.25)
 
+func lock():
+	locked = true
+	col.disabled = true
+	decal.modulate = Color(1,.9,.5,.75)
+	
 func get_letter():
 	if blank: return blank_display
 	return player.owned_tiles[tile_reference].letter

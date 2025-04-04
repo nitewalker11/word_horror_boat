@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://uskntkji2oca"]
+
+[ext_resource type="Shader" path="res://Doorway Dialogue/fisheye.gdshader" id="1_nctv3"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_nctv3")

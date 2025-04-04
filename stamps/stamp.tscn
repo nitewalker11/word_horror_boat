@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b80aa1g56u2cs"]
 
 [ext_resource type="Texture2D" uid="uid://64hg3bk0op0m" path="res://stamps/stampDL.png" id="1_j4aep"]
-[ext_resource type="Script" path="res://stamps/stamp.gd" id="2_7wfmq"]
+[ext_resource type="Script" path="res://stamps/stamp3D.gd" id="2_3sdpo"]
 
 [node name="Sprite3D" type="Sprite3D"]
 transform = Transform3D(0.269816, 0, 0, -1.22698e-13, 1.55662e-05, 0.269816, -7.07442e-18, -0.269816, 1.55663e-05, 0, 0.184705, 0)
@@ -10,7 +10,7 @@ alpha_hash_scale = 2.0
 alpha_antialiasing_mode = 1
 texture_filter = 0
 texture = ExtResource("1_j4aep")
-script = ExtResource("2_7wfmq")
+script = ExtResource("2_3sdpo")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_color = Color(0.184247, 0.000434236, 0.394872, 1)

@@ -1,0 +1,165 @@
+[gd_scene load_steps=15 format=4 uid="uid://dy7p4k836lhhr"]
+
+[ext_resource type="Shader" path="res://Doorway Dialogue/fisheye.gdshader" id="1_habd6"]
+[ext_resource type="PackedScene" uid="uid://c6bgxxms1mbr0" path="res://Doorway Dialogue/Boat_background.blend" id="2_jgdk3"]
+[ext_resource type="PackedScene" uid="uid://bnu3wmfm18cf3" path="res://models/boat.blend" id="3_nhkvb"]
+[ext_resource type="PackedScene" uid="uid://cnu6fqh75emgr" path="res://Doorway Dialogue/captains_door_interior.blend" id="4_dfqla"]
+[ext_resource type="Script" path="res://Doorway Dialogue/sub_viewport.gd" id="4_p3ld1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aunvc"]
+render_priority = 0
+shader = ExtResource("1_habd6")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dtsyk"]
+sky_top_color = Color(0.666474, 0.775933, 0.892221, 1)
+sky_horizon_color = Color(0.751654, 0.759244, 0.77123, 1)
+ground_bottom_color = Color(0.0883848, 0.188596, 0.238063, 1)
+ground_horizon_color = Color(0.752941, 0.760784, 0.772549, 1)
+
+[sub_resource type="Sky" id="Sky_ld64d"]
+sky_material = SubResource("ProceduralSkyMaterial_dtsyk")
+
+[sub_resource type="Environment" id="Environment_hsii0"]
+background_mode = 2
+sky = SubResource("Sky_ld64d")
+ambient_light_sky_contribution = 0.2
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_energy = 0.1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bhqq2"]
+viewport_path = NodePath("Captains Door View/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_elw47"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_habd6")
+shader_parameter/VIEWPORT_TEXTURE = SubResource("ViewportTexture_bhqq2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mvevg"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_t5o30"]
+_surfaces = [{
+"aabb": AABB(-0.535465, -0.003286, -0.859549, 1.07093, 0.0686688, 1.08164),
+"format": 34896613377,
+"index_count": 438,
+"index_data": PackedByteArray("AAAaAAQAAAAWABoAEAACABMAEAAFAAIAFAAHAA4AFAABAAcACQAIAA0ACQAMAAgAEQADABIAEQAEAAMADQABABQADQAIAAEAEwAAABUAEwACAAAAAgAWAAAAAgAYABYAEgALAAoAEgADAAsADwAFABAADwAGAAUAFQAEABEAFQAAAAQADgAGAA8ADgAHAAYAAwAfAAsAAwAZAB8ADAAeAAgADAAgAB4ACAAXAAEACAAeABcABAAZAAMABAAaABkABgAbAAUABgAcABsAAQAdAAcAAQAXAB0ABwAcAAYABwAdABwABQAYAAIABQAbABgAGAAhABYAGAAjACEAGQAqAB8AGQAkACoAIAApAB4AIAArACkAFwAoAB0AFwAiACgAGgAkABkAGgAlACQAHAAmABsAHAAnACYAGwAjABgAGwAmACMAHQAnABwAHQAoACcAFgAlABoAFgAhACUAHgAiABcAHgApACIAKwAiACkAKwAvACIAJQAqACQAJQAsACoAIQAsACUAIQAtACwAIgAuACgAIgAvAC4AIQAmAC0AIQAjACYAKAAtACcAKAAuAC0AJwAtACYAMABGAEIAMAA0AEYAPAAyADUAPAA/ADIAQAA3ADEAQAA6ADcACQA4AAwACQA5ADgAPQAzADQAPQA+ADMAOQAxADgAOQBAADEAPwAwADIAPwBBADAAMgBCAEQAMgAwAEIAPgALADMAPgAKAAsAOwA1ADYAOwA8ADUAQQA0ADAAQQA9ADQAOgA2ADcAOgA7ADYAMwAfAEUAMwALAB8ADABKACAADAA4AEoAOABDAEoAOAAxAEMANABFAEYANAAzAEUANgBHAEgANgA1AEcAMQBJAEMAMQA3AEkANwBIAEkANwA2AEgANQBEAEcANQAyAEQARABLAE0ARABCAEsARQAqAE4ARQAfACoAIABTACsAIABKAFMAQwBSAEwAQwBJAFIARgBOAE8ARgBFAE4ASABQAFEASABHAFAARwBNAFAARwBEAE0ASQBRAFIASQBIAFEAQgBPAEsAQgBGAE8ASgBMAFMASgBDAEwAKwBMAC8AKwBTAEwATwAqACwATwBOACoASwAsAC0ASwBPACwATAAuAC8ATABSAC4ASwBQAE0ASwAtAFAAUgAtAC4AUgBRAC0AUQBQAC0A"),
+"lods": [0.0164326, PackedByteArray("BAAYABoAEwAEABUAFQAEABEAEwACAAQAEAACABMAAgAYAAQADwACABAAEQAEAAMABAAaAAMAEQADABIAEgADAAoAPgAKAAMADwAHAAIADgAHAA8AFAAHAA4ABwAcAAIAAgAcABgAFAABAAcAAQAcAAcADQABABQADQAIAAEACQAIAA0AAQAXABwACAAXAAEACQA4AAgACQA5ADgAOQBAADgAQAA3ADgAQAA6ADcAOgA7ADcAOwAyADcAOwA8ADIAOAA3AEgANwAyAEgAPAA/ADIAPwA0ADIAPwBBADQAQQA9ADQAPQA+ADQAPgADADQAMgA0AEQAMgBEAEgANAADAB8AAwAaAB8ANABGAEQANAAfAEYASABEAEsARABGAEsARgAfACoAGgAqAB8ARgAqAEsAGgAlACoASwAqACUAGAAlABoAGAAmACUASwAlACYAHAAmABgASABLAFIAUgBLACYAHAAoACYAUgAmACgAFwAoABwAKwBSACgAHgAoABcAHgArACgACAAeABcAQwBSACsAHgBDACsACABDAB4AQwBIAFIACAA4AEMAOABIAEMA"), 0.0440123, PackedByteArray("EwARABUAEwAaABEAEQAaABIAPgAKABIAPgASAD0AEgAaACoAPQASACoAGgAlACoAEwAoABoAKAAlABoASwAqACUASwAlACgAPQAqAEYARgAqAEsAPwA9AEYAPwBBAD0ASABGAEsAPwBGAEgAKwBLACgAOwA/AEgAOwA8AD8AOQBIAEsAOQA7AEgAOQBLACsAQAA7ADkAQAA6ADsAHgA5ACsAHgArACgADQA5AB4ACQA5AA0ADQAeABQAFAAeACgAFAAoABMADwAUABMADgAUAA8ADwATABAA"), 0.0612468, PackedByteArray("EwARABUADwATABAADwAUABMAEwAUABEADgAUAA8AFAA/ABEAEgARAD8APgAKABIAPgASAD0APQASAD8APwBBAD0AOQA/ABQADQA5ABQACQA5AA0AOQA7AD8AOwA8AD8AQAA7ADkAQAA6ADsA")],
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 84,
+"vertex_data": PackedByteArray("By3gicDHAAD1MoGDyzAAAJ4i7Iw3tQAAb1sQjlPjAACJPcqLkNQAANMXQY0olgAAQRa2jcR3AACJGpGNWVcAAOFRPoNHIAAA/38SEAAAAAD/f7Qc//8AAP9/j5rg6QAA/39NkOgZAABlSQAA2AcAAEUFtQyhSwAAAADjDIhzAADvAVMM8ZgAAFowhgrD5QAAKFVSDe/3AAA4D+oLLL8AAFUjUgAsHAAACBwqCP3VAAAyRnP0v7QAAE1KC/BQTAAA/z6P9uynAABNZln308cAAJ5Rx/WdvQAAhzfK9nCSAABxNhv3aX0AAGc5Aff8ZgAAsV/c7+NAAAD/f///W8wAAP9/5fh6PAAAamA29aGjAADfYpPyGmUAABpcefbzmwAAonPy9g2vAABAZwH28KgAAKJXnfYWjwAA+1bN9oCCAADBWL72EnUAAK1vd/JDXgAA/38g/MOxAAD/f9/3n1sAAP9/RvuJoAAA/39s+k6PAAD/f5P5FH4AAP9/ufjabAAA99LgicDHAAAJzYGDyzAAAGDd7Iw3tQAAj6QQjlPjAAB1wsqLkNQAACvoQY0olgAAvem2jcR3AAB15ZGNWVcAAB2uPoNHIAAAmbYAANgHAAC5+rUMoUsAAP//4wyIcwAAD/5TDPGYAACkz4YKw+UAANaqUg3v9wAAxvDqCyy/AACp3FIALBwAAPbjKgj91QAAzLlz9L+0AACxtQvwUEwAAP/Aj/bspwAAsZlZ99PHAABgrsf1nb0AAHfIyvZwkgAAjckb92l9AACXxgH3/GYAAE2g3O/jQAAAlJ829aGjAAAfnZPyGmUAAOSjefbzmwAAXIzy9g2vAAC+mAH28KgAAFyonfYWjwAAA6nN9oCCAAA9p772EnUAAFGQd/JDXgAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_a41xh"]
+resource_name = "captains_door_interior_Plane_001"
+_surfaces = [{
+"aabb": AABB(-0.535465, -0.003286, -0.859549, 1.07093, 0.0686688, 1.08164),
+"attribute_data": PackedByteArray("Fy/3xnY0MDLlJLa0eVwG4jk/k9M8GiCWmxgoeNccOViHUrohb3+GAEGAfv8ugDLohX94G6VJXgi3BhRMSQHec0UDNZlpMeHl11Xz938QWb88JMwcUx0X1glIyLOkS5RNCEFApzZnVcYiU2y8tzlEkpU4sX1nO8FnWWBSQhaAlcqif/w9XmHzoopjw2UqXXSbBnQOrgJoH6jLWOKOHliRgspZbXXtbwdfAICqsLt/Zlzyf9Gf5H/3jtZ/HH7Jf0FtDtFxxrnKtDEi2x+02KPL4QDBKNOY5XiVB+d9d5filleOrHAhRbUFCKP4TEtS/g5zlPxnmO/OX+Wfqq33me+hvs/aNhzr4nTV/Ldss7izP03ovtim7pgsxvKsIrwXxtCRF8c7fSHEUGfxnh5CjJ7BovublGWzojqb9ov6rfCX96f+pqGOlqdQgtSlLnWNj+1e"),
+"format": 34896613399,
+"index_count": 438,
+"index_data": PackedByteArray("AAAaAAQAAAAWABoAEAACABMAEAAFAAIAFAAHAA4AFAABAAcACQAIAA0ACQAMAAgAEQADABIAEQAEAAMADQABABQADQAIAAEAEwAAABUAEwACAAAAAgAWAAAAAgAYABYAEgALAAoAEgADAAsADwAFABAADwAGAAUAFQAEABEAFQAAAAQADgAGAA8ADgAHAAYAAwAfAAsAAwAZAB8ADAAeAAgADAAgAB4ACAAXAAEACAAeABcABAAZAAMABAAaABkABgAbAAUABgAcABsAAQAdAAcAAQAXAB0ABwAcAAYABwAdABwABQAYAAIABQAbABgAGAAhABYAGAAjACEAGQAqAB8AGQAkACoAIAApAB4AIAArACkAFwAoAB0AFwAiACgAGgAkABkAGgAlACQAHAAmABsAHAAnACYAGwAjABgAGwAmACMAHQAnABwAHQAoACcAFgAlABoAFgAhACUAHgAiABcAHgApACIAKwAiACkAKwAvACIAJQAqACQAJQAsACoAIQAsACUAIQAtACwAIgAuACgAIgAvAC4AIQAmAC0AIQAjACYAKAAtACcAKAAuAC0AJwAtACYAMABGAEIAMAA0AEYAPAAyADUAPAA/ADIAQAA3ADEAQAA6ADcACQA4AAwACQA5ADgAPQAzADQAPQA+ADMAOQAxADgAOQBAADEAPwAwADIAPwBBADAAMgBCAEQAMgAwAEIAPgALADMAPgAKAAsAOwA1ADYAOwA8ADUAQQA0ADAAQQA9ADQAOgA2ADcAOgA7ADYAMwAfAEUAMwALAB8ADABKACAADAA4AEoAOABDAEoAOAAxAEMANABFAEYANAAzAEUANgBHAEgANgA1AEcAMQBJAEMAMQA3AEkANwBIAEkANwA2AEgANQBEAEcANQAyAEQARABLAE0ARABCAEsARQAqAE4ARQAfACoAIABTACsAIABKAFMAQwBSAEwAQwBJAFIARgBOAE8ARgBFAE4ASABQAFEASABHAFAARwBNAFAARwBEAE0ASQBRAFIASQBIAFEAQgBPAEsAQgBGAE8ASgBMAFMASgBDAEwAKwBMAC8AKwBTAEwATwAqACwATwBOACoASwAsAC0ASwBPACwATAAuAC8ATABSAC4ASwBQAE0ASwAtAFAAUgAtAC4AUgBRAC0AUQBQAC0A"),
+"lods": [0.0164326, PackedByteArray("BAAYABoAEwAEABUAFQAEABEAEwACAAQAEAACABMAAgAYAAQADwACABAAEQAEAAMABAAaAAMAEQADABIAEgADAAoAPgAKAAMADwAHAAIADgAHAA8AFAAHAA4ABwAcAAIAAgAcABgAFAABAAcAAQAcAAcADQABABQADQAIAAEACQAIAA0AAQAXABwACAAXAAEACQA4AAgACQA5ADgAOQBAADgAQAA3ADgAQAA6ADcAOgA7ADcAOwAyADcAOwA8ADIAOAA3AEgANwAyAEgAPAA/ADIAPwA0ADIAPwBBADQAQQA9ADQAPQA+ADQAPgADADQAMgA0AEQAMgBEAEgANAADAB8AAwAaAB8ANABGAEQANAAfAEYASABEAEsARABGAEsARgAfACoAGgAqAB8ARgAqAEsAGgAlACoASwAqACUAGAAlABoAGAAmACUASwAlACYAHAAmABgASABLAFIAUgBLACYAHAAoACYAUgAmACgAFwAoABwAKwBSACgAHgAoABcAHgArACgACAAeABcAQwBSACsAHgBDACsACABDAB4AQwBIAFIACAA4AEMAOABIAEMA"), 0.0440123, PackedByteArray("EwARABUAEwAaABEAEQAaABIAPgAKABIAPgASAD0AEgAaACoAPQASACoAGgAlACoAEwAoABoAKAAlABoASwAqACUASwAlACgAPQAqAEYARgAqAEsAPwA9AEYAPwBBAD0ASABGAEsAPwBGAEgAKwBLACgAOwA/AEgAOwA8AD8AOQBIAEsAOQA7AEgAOQBLACsAQAA7ADkAQAA6ADsAHgA5ACsAHgArACgADQA5AB4ACQA5AA0ADQAeABQAFAAeACgAFAAoABMADwAUABMADgAUAA8ADwATABAA"), 0.0612468, PackedByteArray("EwARABUADwATABAADwAUABMAEwAUABEADgAUAA8AFAA/ABEAEgARAD8APgAKABIAPgASAD0APQASAD8APwBBAD0AOQA/ABQADQA5ABQACQA5AA0AOQA7AD8AOwA8AD8AQAA7ADkAQAA6ADsA")],
+"material": SubResource("StandardMaterial3D_mvevg"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 84,
+"vertex_data": PackedByteArray("By3gicDHvrj1MoGDyzAoyJ4i7Iw3tb27b1sQjlPjybSJPcqLkNQ1ttMXQY0oloa+QRa2jcR3NMGJGpGNWVd5xOFRPoNHIO/J/38SEAAAfMz/f7Qc//+7sf9/j5rg6TG0/39NkOgZT8plSQAA2Af9y0UFtQyhS/DFAADjDIhz7sHvAVMM8ZiUvlowhgrD5SG0KFVSDe/3YrI4D+oLLL/xulUjUgAsHPvJCBwqCP3VYrcyRnP0v7TLvE1KC/BQTI/D/z6P9uynDr5NZln308eJu55Rx/WdvRq8hzfK9nCSKr9xNhv3aX07wGc5Aff8ZsnBsV/c7+NAIcT/f///W8xTu/9/5fh6PCPEamA29aGj5r/fYpPyGmVjwBpcefbzm8a/onPy9g2vE8BAZwH28KgOwKJXnfYWj+q/+1bN9oCCAMDBWL72EnU/wK1vd/JDXjLA/38g/MOxLMD/f9/3n1sdwP9/RvuJoPO//39s+k6P/r//f5P5FH4+wP9/ufjabHLA99LgicDHxrgJzYGDyzAuyGDd7Iw3tca7j6QQjlPjzbR1wsqLkNQ7tivoQY0olpC+vem2jcR3PsF15ZGNWVeCxB2uPoNHIPLJmbYAANgHAMy5+rUMoUv6xf//4wyIc/rBD/5TDPGYoL6kz4YKw+UptNaqUg3v92eyxvDqCyy//Lqp3FIALBwByvbjKgj91Wy3zLlz9L+0zryxtQvwUEyRw//Aj/bspxK+sZlZ99PHirtgrsf1nb0cvHfIyvZwki6/jckb92l9P8CXxgH3/GbMwU2g3O/jQCPElJ829aGj5r8fnZPyGmVjwOSjefbzm8a/XIzy9g2vE8C+mAH28KgPwFyonfYWj+q/A6nN9oCCAMA9p772EnU/wFGQd/JDXjPAKvN2mej2zJF+8USchvgyjsr1H5Q58TKdzfFRnGvzHpkB+4eJo/80gHz/NYCD/zSAov8zgDD6/4q68cCcfe9modbuf6LR876YLvcKkc/u2KHS9QyU7vBWni/6+oq5+0mIpPnzi2P8U4aA+zuINfn8jJH5iIwY+peLhv3ZhI7/NICa/zSAhv+CgI//XICd/0SAyv7mgTr/E4GT/1qAk/9ZgI//O4AC/5+Blv8zgJb/M4CW/zOAlv8zgJb/M4CW/zOAfOaCc0HuQne049NxsfHmeMrrJ3bK4oxxsOMhcunmwXOL9mJ7FvWQekfjDXKc3s5vft0mbynnK3TT7o53H94gbwPsKnaa4UJx/fSQer33HHwF9AR6oPnIfLr35HsA85Z5dvPweWv0enov++x9fP/vf5v/DICP/yOAGP4yf+v+on+Z/wyAmf8OgJ3/K4Bg/mp/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_t5o30")
+
+[node name="Doorway Dialogue" type="Node3D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+visible = false
+material = SubResource("ShaderMaterial_aunvc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hsii0")
+
+[node name="Boat_background" parent="." instance=ExtResource("2_jgdk3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -2.69, -17.641)
+
+[node name="boolean" parent="Boat_background" index="10"]
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.108981, 0.990006, 0.0895101, 0.557945, -0.0136027, 0.829766, 0.822691, 0.140371, -0.550887, -1.35392, 3.5221, 0)
+light_color = Color(1, 1, 0.941176, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="LightmapGI" type="LightmapGI" parent="."]
+
+[node name="boat" parent="." instance=ExtResource("3_nhkvb")]
+transform = Transform3D(0.0402746, 0, -1.43646, 0, 1.43703, 0, 1.43646, 0, 0.0402746, 26.3866, -0.611441, -6.81457)
+
+[node name="Captains Door View" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000809193, -1.58922, 5.79537)
+
+[node name="captains_door_interior2" parent="Captains Door View" instance=ExtResource("4_dfqla")]
+
+[node name="Eye" parent="Captains Door View/captains_door_interior2" index="1"]
+visible = false
+
+[node name="SubViewport" type="SubViewport" parent="Captains Door View"]
+size = Vector2i(2000, 1000)
+script = ExtResource("4_p3ld1")
+
+[node name="Eye" type="MeshInstance3D" parent="Captains Door View/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -0.000809193, 0.284182, 5.79665)
+material_override = SubResource("ShaderMaterial_elw47")
+mesh = SubResource("ArrayMesh_a41xh")
+skeleton = NodePath("")
+
+[node name="EyeCam" type="Camera3D" parent="Captains Door View/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.983353, 0.181704, 0, -0.181704, 0.983353, 0, -0.351311, 0)
+fov = 110.0
+
+[node name="Camera3D" type="Camera3D" parent="Captains Door View"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000809193, 2.00845, 1.18716)
+projection = 1
+size = 1.65
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Captains Door View"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86881, 0.202005, 1.1968)
+light_color = Color(1, 0.662745, 0.0352941, 1)
+light_energy = 0.5
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Captains Door View"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86881, 3.29698, 0.136694)
+light_color = Color(0.229637, 0.758082, 0.956211, 1)
+light_energy = 0.5
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Captains Door View"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98835, 3.29698, 0.678071)
+light_color = Color(0, 0.790759, 0.828226, 1)
+light_energy = 0.5
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Captains Door View"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6745, 1.51774, 1.03458)
+light_color = Color(1, 0.403922, 0.0352941, 1)
+light_energy = 0.5
+
+[editable path="Boat_background"]
+[editable path="Captains Door View/captains_door_interior2"]

@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Board/location.gd" id="5_i6sqx"]
 [ext_resource type="PackedScene" uid="uid://brd4ible4i50s" path="res://marker_3d.tscn" id="7_w6f88"]
 [ext_resource type="Material" uid="uid://b2guy6w51bnbu" path="res://Board/map.tres" id="8_4cukn"]
-[ext_resource type="Material" uid="uid://b65ku0vcaooug" path="res://Board/wood_2.tres" id="8_cn0gb"]
+[ext_resource type="Material" uid="uid://b65ku0vcaooug" path="res://Materials/wood_2.tres" id="8_cn0gb"]
 [ext_resource type="Texture2D" uid="uid://bef4xmwhblycr" path="res://tiles/Letter Decals/X.png" id="8_iu45t"]
 [ext_resource type="Material" uid="uid://bmqd551gbqmuj" path="res://Board/candle.tres" id="9_1187c"]
 [ext_resource type="Texture2D" uid="uid://dwfc6jqnip8f5" path="res://Board/candle.jpg" id="11_y102a"]
