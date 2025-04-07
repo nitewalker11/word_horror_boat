@@ -1,19 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://gk3063c66goj"]
+[gd_scene load_steps=16 format=3 uid="uid://gk3063c66goj"]
 
 [ext_resource type="PackedScene" uid="uid://dfk1lrdgf31ni" path="res://Board/board.tscn" id="2_2aj56"]
 [ext_resource type="Script" path="res://wordlist.gd" id="4_olmda"]
 [ext_resource type="Script" path="res://scorekeeper.gd" id="4_rbx21"]
 [ext_resource type="Script" path="res://Player/player.gd" id="5_a1vk3"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ke24"]
-
-[sub_resource type="Sky" id="Sky_if8su"]
-sky_material = SubResource("ProceduralSkyMaterial_4ke24")
-
-[sub_resource type="Environment" id="Environment_w36qu"]
-background_mode = 1
-background_color = Color(0.0145223, 0.00350054, 0.0305379, 1)
-sky = SubResource("Sky_if8su")
+[ext_resource type="PackedScene" uid="uid://dim4xn4h6xkp" path="res://Captains Room/captains_room.blend" id="5_nbvkr"]
+[ext_resource type="Material" uid="uid://b65ku0vcaooug" path="res://Materials/wood_2.tres" id="6_0nwwg"]
+[ext_resource type="Material" uid="uid://cfclyovacqtfm" path="res://Materials/rosewood.tres" id="6_md8iu"]
+[ext_resource type="LightmapGIData" uid="uid://7oaulotq4jqh" path="res://main.lmbake" id="8_1vci4"]
 
 [sub_resource type="Animation" id="Animation_xf0ki"]
 resource_name = "FLICKER"
@@ -125,36 +119,31 @@ _data = {
 "RESET": SubResource("Animation_4x1gk")
 }
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ke24"]
+sky_top_color = Color(0.0382126, 0.271025, 0.29475, 1)
 
-[node name="board" parent="." instance=ExtResource("2_2aj56")]
+[sub_resource type="Sky" id="Sky_if8su"]
+sky_material = SubResource("ProceduralSkyMaterial_4ke24")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_w36qu")
+[sub_resource type="Environment" id="Environment_w36qu"]
+background_mode = 2
+background_color = Color(0.0145223, 0.00350054, 0.0305379, 1)
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_if8su")
+glow_enabled = true
+glow_intensity = 3.0
+glow_bloom = 1.0
 
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.513691, 0.857975, 0, -0.857975, -0.513691, 0, 2.13442, -2.03867)
-light_color = Color(0.870588, 1, 1, 1)
-light_energy = 1.5
-shadow_enabled = true
-spot_range = 30.0
-spot_attenuation = 0.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sy2uf"]
+cull_mode = 2
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.47906, 0.877782, 0, -0.877782, 0.47906, 0, 1.20777, 2.71225)
-light_color = Color(0.760967, 1, 0.810997, 1)
-light_energy = 2.0
-shadow_enabled = true
-spot_range = 1.5
-spot_attenuation = 0.0
-spot_angle = 60.0
+[node name="Cabin" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.17456, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.266359, -0.946742, 0.180922, 0.76236, 0.321784, 0.561482, -0.589797, -0.0116276, 0.807468, 0, 1.53632, -0.0416555)
-light_color = Color(0.811765, 1, 1, 1)
-light_energy = 0.2
+[node name="Board Components" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.33693, 3.49337)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="Light_Candle" type="OmniLight3D" parent="Board Components"]
 transform = Transform3D(-0.643937, 0, -0.765079, 0, 1, 0, 0.765079, 0, -0.643937, -3.58174, 0.303464, -1.26891)
 light_color = Color(0.907404, 0.537209, 0.24721, 1)
 light_energy = 1.5
@@ -164,30 +153,95 @@ shadow_reverse_cull_face = true
 shadow_transmittance_bias = 0.5
 omni_range = 3.5
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="OmniLight3D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Board Components/Light_Candle"]
 libraries = {
 "": SubResource("AnimationLibrary_prenf")
 }
 autoplay = "FLICKER"
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Light_Board_Main" type="SpotLight3D" parent="Board Components"]
+transform = Transform3D(1, 0, 0, 0, -0.513691, 0.857975, 0, -0.857975, -0.513691, 0, 2.13442, -2.03867)
+light_color = Color(0.870588, 1, 1, 1)
+light_energy = 1.5
+shadow_enabled = true
+spot_range = 30.0
+spot_attenuation = 0.0
 
-[node name="Wordlist" type="Node" parent="."]
+[node name="Light_Board_Secondary" type="SpotLight3D" parent="Board Components"]
+transform = Transform3D(1, 0, 0, 0, 0.47906, 0.877782, 0, -0.877782, 0.47906, 0, 1.20777, 2.71225)
+light_color = Color(0.760967, 1, 0.810997, 1)
+light_energy = 2.0
+shadow_enabled = true
+spot_range = 1.5
+spot_attenuation = 0.0
+spot_angle = 60.0
+
+[node name="board" parent="Board Components" instance=ExtResource("2_2aj56")]
+
+[node name="Wordlist" type="Node" parent="Board Components"]
 unique_name_in_owner = true
 script = ExtResource("4_olmda")
 word_list = "res://word list.txt"
 
-[node name="Player" type="Node" parent="."]
+[node name="Player" type="Node" parent="Board Components"]
 unique_name_in_owner = true
 script = ExtResource("5_a1vk3")
 
-[node name="Scorekeeper" type="Node" parent="." node_paths=PackedStringArray("board")]
+[node name="Scorekeeper" type="Node" parent="Board Components" node_paths=PackedStringArray("board")]
 unique_name_in_owner = true
 script = ExtResource("4_rbx21")
 board = NodePath("../board")
 
-[connection signal="ready" from="Player" to="board" method="_on_player_ready"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_w36qu")
+
+[node name="captains_room" parent="." instance=ExtResource("5_nbvkr")]
+transform = Transform3D(3.01271, 0, 0, 0, 3.01271, 0, 0, 0, 3.01271, 5.90532, -5.7192, -0.0264907)
+
+[node name="Roof" parent="captains_room" index="0"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="Shelves" parent="captains_room" index="1"]
+visible = false
+
+[node name="Floor" parent="captains_room" index="2"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="Wall" parent="captains_room" index="3"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="Back_Columns" parent="captains_room" index="5"]
+material_override = ExtResource("6_md8iu")
+
+[node name="Door" parent="captains_room" index="6"]
+transform = Transform3D(-1, -1.50996e-07, 6.60024e-15, 0, -4.37114e-08, -1, 1.50996e-07, -1, 4.37114e-08, -5.55086, 1.65012, 5.45572)
+material_override = ExtResource("6_md8iu")
+
+[node name="Side_Window" parent="captains_room" index="7"]
+material_override = SubResource("StandardMaterial3D_sy2uf")
+
+[node name="Table" parent="captains_room" index="8"]
+material_override = ExtResource("6_md8iu")
+
+[node name="Back_Wall" parent="captains_room" index="9"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="Wall_001" parent="captains_room" index="10"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.635682, 0.517542, -0.572765, 0.165529, 0.816097, 0.553702, 0.753995, 0.257169, -0.604446, -31.261, 8.99969, 0)
+light_energy = 3.0
+shadow_enabled = true
+shadow_bias = 0.02
+shadow_blur = 0.5
+
+[node name="LightmapGI" type="LightmapGI" parent="."]
+quality = 2
+bounces = 10
+texel_scale = 0.25
+light_data = ExtResource("8_1vci4")
+
+[connection signal="ready" from="Board Components/Player" to="Board Components/board" method="_on_player_ready"]
+
+[editable path="captains_room"]

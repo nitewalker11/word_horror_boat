@@ -44,7 +44,7 @@ func _on_player_ready() -> void:
 	initialize_spaces()
 	initialize_bag()
 	deal_tiles()
-	tile_hover_distance = cam.global_position.y - .27
+	tile_hover_distance = cam.position.y - .27
 
 func _process(delta: float) -> void:
 	#dont run other game controls until blank has been selected

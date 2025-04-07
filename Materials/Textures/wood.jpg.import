@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjlhlrwdpd5px"
-path="res://.godot/imported/107_rosewood fine wood-texture_seamless.jpg-8c273a5e19334079c90d793795f2f541.ctex"
+uid="uid://ctbodiamsnsog"
+path.s3tc="res://.godot/imported/wood.jpg-bcf4206e420e4c1f946e713ceb648114.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://Materials/Textures/107_rosewood fine wood-texture_seamless.jpg"
-dest_files=["res://.godot/imported/107_rosewood fine wood-texture_seamless.jpg-8c273a5e19334079c90d793795f2f541.ctex"]
+source_file="res://Materials/Textures/wood.jpg"
+dest_files=["res://.godot/imported/wood.jpg-bcf4206e420e4c1f946e713ceb648114.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

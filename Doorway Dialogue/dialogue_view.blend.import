@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cnu6fqh75emgr"
-path="res://.godot/imported/captains_door_interior.blend-c128835bcae67ed9118f371e1f993073.scn"
+path="res://.godot/imported/dialogue_view.blend-a019ff588ffd40f3d77f2417dd321949.scn"
 
 [deps]
 
-source_file="res://Doorway Dialogue/captains_door_interior.blend"
-dest_files=["res://.godot/imported/captains_door_interior.blend-c128835bcae67ed9118f371e1f993073.scn"]
+source_file="res://Doorway Dialogue/dialogue_view.blend"
+dest_files=["res://.godot/imported/dialogue_view.blend-a019ff588ffd40f3d77f2417dd321949.scn"]
 
 [params]
 

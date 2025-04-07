@@ -1,0 +1,26 @@
+[remap]
+
+importer="2d_array_texture"
+type="CompressedTexture2DArray"
+uid="uid://nksiwra6rs3s"
+path="res://.godot/imported/doorway_dialogue.exr-964e2af3f21d42e18fb8ba8d76b10187.ctexarray"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Doorway Dialogue/doorway_dialogue.exr"
+dest_files=["res://.godot/imported/doorway_dialogue.exr-964e2af3f21d42e18fb8ba8d76b10187.ctexarray"]
+
+[params]
+
+compress/mode=3
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/channel_pack=1
+mipmaps/generate=false
+mipmaps/limit=-1
+slices/horizontal=1
+slices/vertical=4

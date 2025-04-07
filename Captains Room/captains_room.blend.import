@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c6bgxxms1mbr0"
-path="res://.godot/imported/Boat_background.blend-09de484e34cfee5ffe9fa093bc5b9aa9.scn"
+uid="uid://dim4xn4h6xkp"
+path="res://.godot/imported/captains_room.blend-739c7896a0ba6058b5e9262217c94e2f.scn"
 
 [deps]
 
-source_file="res://Doorway Dialogue/Boat_background.blend"
-dest_files=["res://.godot/imported/Boat_background.blend-09de484e34cfee5ffe9fa093bc5b9aa9.scn"]
+source_file="res://Captains Room/captains_room.blend"
+dest_files=["res://.godot/imported/captains_room.blend-739c7896a0ba6058b5e9262217c94e2f.scn"]
 
 [params]
 
@@ -22,7 +22,7 @@ meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
 meshes/light_baking=2
-meshes/lightmap_texel_size=0.2
+meshes/lightmap_texel_size=0.1
 meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true

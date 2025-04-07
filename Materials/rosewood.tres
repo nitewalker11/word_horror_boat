@@ -1,12 +1,12 @@
 [gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cfclyovacqtfm"]
 
-[ext_resource type="Texture2D" uid="uid://bjlhlrwdpd5px" path="res://Materials/Textures/107_rosewood fine wood-texture_seamless.jpg" id="1_ajqtm"]
+[ext_resource type="Texture2D" uid="uid://bjlhlrwdpd5px" path="res://Materials/Textures/rosewood.jpg" id="1_ajqtm"]
 [ext_resource type="Texture2D" uid="uid://dxi31rpufxv55" path="res://Materials/Textures/rosewood_normal.bmp" id="2_f7djw"]
 
 [resource]
 albedo_texture = ExtResource("1_ajqtm")
 roughness = 0.5
 normal_enabled = true
-normal_scale = 0.4
+normal_scale = 0.7
 normal_texture = ExtResource("2_f7djw")
 texture_filter = 0
