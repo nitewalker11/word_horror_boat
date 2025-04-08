@@ -1,4 +1,3 @@
-// Converted from https://www.shadertoy.com/view/td2GzW
 shader_type spatial;
 render_mode unshaded;
 uniform sampler2D VIEWPORT_TEXTURE: source_color;

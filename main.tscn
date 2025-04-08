@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dim4xn4h6xkp" path="res://Captains Room/captains_room.blend" id="5_nbvkr"]
 [ext_resource type="Material" uid="uid://b65ku0vcaooug" path="res://Materials/wood_2.tres" id="6_0nwwg"]
 [ext_resource type="Material" uid="uid://cfclyovacqtfm" path="res://Materials/rosewood.tres" id="6_md8iu"]
+[ext_resource type="Material" uid="uid://m440jndontf1" path="res://Captains Room/Materials/Window.tres" id="7_bsvvj"]
 [ext_resource type="LightmapGIData" uid="uid://7oaulotq4jqh" path="res://main.lmbake" id="8_1vci4"]
 
 [sub_resource type="Animation" id="Animation_xf0ki"]
@@ -120,7 +121,11 @@ _data = {
 }
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ke24"]
-sky_top_color = Color(0.0382126, 0.271025, 0.29475, 1)
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.231701, 0.337139, 0.370999, 1)
+ground_bottom_color = Color(1, 1, 1, 1)
+ground_horizon_color = Color(0.173009, 0.252138, 0.27715, 1)
+ground_curve = 0.00101531
 
 [sub_resource type="Sky" id="Sky_if8su"]
 sky_material = SubResource("ProceduralSkyMaterial_4ke24")
@@ -128,20 +133,20 @@ sky_material = SubResource("ProceduralSkyMaterial_4ke24")
 [sub_resource type="Environment" id="Environment_w36qu"]
 background_mode = 2
 background_color = Color(0.0145223, 0.00350054, 0.0305379, 1)
-background_energy_multiplier = 0.5
 sky = SubResource("Sky_if8su")
+reflected_light_source = 1
+ssao_enabled = true
 glow_enabled = true
 glow_intensity = 3.0
-glow_bloom = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sy2uf"]
-cull_mode = 2
+glow_strength = 0.6
+glow_bloom = 0.1
+glow_blend_mode = 1
 
 [node name="Cabin" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.17456, 0)
 
 [node name="Board Components" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.33693, 3.49337)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -9.46, -3.33693, 9.76653)
 
 [node name="Light_Candle" type="OmniLight3D" parent="Board Components"]
 transform = Transform3D(-0.643937, 0, -0.765079, 0, 1, 0, 0.765079, 0, -0.643937, -3.58174, 0.303464, -1.26891)
@@ -202,39 +207,63 @@ transform = Transform3D(3.01271, 0, 0, 0, 3.01271, 0, 0, 0, 3.01271, 5.90532, -5
 material_override = ExtResource("6_0nwwg")
 
 [node name="Shelves" parent="captains_room" index="1"]
-visible = false
+material_override = ExtResource("7_bsvvj")
 
 [node name="Floor" parent="captains_room" index="2"]
 material_override = ExtResource("6_0nwwg")
 
-[node name="Wall" parent="captains_room" index="3"]
+[node name="Back_Window" parent="captains_room" index="3"]
+material_override = ExtResource("7_bsvvj")
+
+[node name="Back_Columns" parent="captains_room" index="4"]
+material_override = ExtResource("6_md8iu")
+
+[node name="Door" parent="captains_room" index="5"]
+transform = Transform3D(-1, -1.50996e-07, 6.60024e-15, 0, -4.37114e-08, -1, 1.50996e-07, -1, 4.37114e-08, -5.03837, 1.58715, 11.3606)
+material_override = ExtResource("6_md8iu")
+
+[node name="Table" parent="captains_room" index="6"]
+material_override = ExtResource("6_md8iu")
+
+[node name="Back_Wall" parent="captains_room" index="7"]
 material_override = ExtResource("6_0nwwg")
 
-[node name="Back_Columns" parent="captains_room" index="5"]
-material_override = ExtResource("6_md8iu")
-
-[node name="Door" parent="captains_room" index="6"]
-transform = Transform3D(-1, -1.50996e-07, 6.60024e-15, 0, -4.37114e-08, -1, 1.50996e-07, -1, 4.37114e-08, -5.55086, 1.65012, 5.45572)
-material_override = ExtResource("6_md8iu")
-
-[node name="Side_Window" parent="captains_room" index="7"]
-material_override = SubResource("StandardMaterial3D_sy2uf")
-
-[node name="Table" parent="captains_room" index="8"]
-material_override = ExtResource("6_md8iu")
-
-[node name="Back_Wall" parent="captains_room" index="9"]
+[node name="Wall_001" parent="captains_room" index="8"]
 material_override = ExtResource("6_0nwwg")
 
-[node name="Wall_001" parent="captains_room" index="10"]
+[node name="Side_Window_003" parent="captains_room" index="9"]
+material_override = ExtResource("7_bsvvj")
+
+[node name="Cube" parent="captains_room" index="10"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="Support_Beam" parent="captains_room" index="11"]
+material_override = ExtResource("6_md8iu")
+
+[node name="Beam" parent="captains_room" index="12"]
+material_override = ExtResource("6_md8iu")
+
+[node name="Support_Beam_001" parent="captains_room" index="13"]
+material_override = ExtResource("6_md8iu")
+
+[node name="Cube_001" parent="captains_room" index="14"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="Wall_002" parent="captains_room" index="15"]
+material_override = ExtResource("6_0nwwg")
+
+[node name="Side_Window_001" parent="captains_room" index="16"]
+material_override = ExtResource("7_bsvvj")
+
+[node name="Cube_002" parent="captains_room" index="18"]
 material_override = ExtResource("6_0nwwg")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.635682, 0.517542, -0.572765, 0.165529, 0.816097, 0.553702, 0.753995, 0.257169, -0.604446, -31.261, 8.99969, 0)
+transform = Transform3D(0.259596, -0.504585, -0.823409, 0.12093, -0.828944, 0.546102, -0.958117, -0.241341, -0.154171, -13.7667, 0.453886, 1.92873)
 light_energy = 3.0
 shadow_enabled = true
-shadow_bias = 0.02
-shadow_blur = 0.5
+shadow_bias = 0.0
+shadow_blur = 2.5
 
 [node name="LightmapGI" type="LightmapGI" parent="."]
 quality = 2

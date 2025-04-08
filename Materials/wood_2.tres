@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://b4bs04wbt5bca" path="res://Materials/Textures/wood_2_normal.bmp" id="2_65xd7"]
 
 [resource]
-albedo_color = Color(0.283729, 0.283729, 0.283729, 1)
 albedo_texture = ExtResource("1_ixogj")
 metallic_specular = 0.2
 roughness = 0.52
